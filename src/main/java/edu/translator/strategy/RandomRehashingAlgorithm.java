@@ -1,5 +1,4 @@
-package edu.translator;
-
+package edu.translator.strategy;
 
 
 public class RandomRehashingAlgorithm extends HashingAlgorithm {
@@ -19,7 +18,7 @@ public class RandomRehashingAlgorithm extends HashingAlgorithm {
             R_COEFFICIENT = R_COEFFICIENT * 5 % (4 * TABLE_SIZE);
             hashCode = (toHash(word) + R_COEFFICIENT / 4) % TABLE_SIZE;
         }
-        if(hashTable[hashCode].equals("$")){
+        if(hashTable[hashCode].equals(TABLE_FILLER)){
             hashTable[hashCode] = word;
             return true;
         }
@@ -37,10 +36,7 @@ public class RandomRehashingAlgorithm extends HashingAlgorithm {
             R_COEFFICIENT = R_COEFFICIENT * 5 % (4 * TABLE_SIZE);
             hashCode = (toHash(word) + R_COEFFICIENT / 4) % TABLE_SIZE;
         }
-        if(hashTable[hashCode].equals("$")){
-            return true;
-        }
-        return false;
+        return hashTable[hashCode].equals(TABLE_FILLER);
     }
 
     @Override
@@ -82,7 +78,7 @@ public class RandomRehashingAlgorithm extends HashingAlgorithm {
     @Override
     public void test(){
 
-        System.out.println("RANDOM REHASHING");
+        System.out.println(propertiesResourceBundle.getString("random.rehashing.method.name"));
 
         super.test();
     }

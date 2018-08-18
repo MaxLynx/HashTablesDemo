@@ -1,7 +1,7 @@
-package edu.translator;
+package edu.translator.entities;
 
 
-class Symbol {
+public class Symbol {
     private String name;
     private int value;
     private int reference;

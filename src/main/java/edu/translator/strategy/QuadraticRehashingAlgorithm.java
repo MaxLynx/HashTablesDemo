@@ -1,4 +1,4 @@
-package edu.translator;
+package edu.translator.strategy;
 
 
 public class QuadraticRehashingAlgorithm extends HashingAlgorithm {
@@ -19,7 +19,7 @@ public class QuadraticRehashingAlgorithm extends HashingAlgorithm {
                     B_COEFFICIENT*attempt + C_COEFFICIENT) % TABLE_SIZE;
         else
             hashCode = toHash(word) % TABLE_SIZE;
-        if(hashTable[Math.abs(hashCode)].equals("$")){
+        if(hashTable[Math.abs(hashCode)].equals(TABLE_FILLER)){
             hashTable[Math.abs(hashCode)] = word;
             return true;
         }
@@ -34,10 +34,7 @@ public class QuadraticRehashingAlgorithm extends HashingAlgorithm {
                     B_COEFFICIENT*attempt + C_COEFFICIENT) % TABLE_SIZE;
         else
             hashCode = toHash(word) % TABLE_SIZE;
-        if(hashTable[Math.abs(hashCode)].equals("$")){
-            return true;
-        }
-        return false;
+        return hashTable[Math.abs(hashCode)].equals(TABLE_FILLER);
     }
 
     @Override
@@ -76,7 +73,7 @@ public class QuadraticRehashingAlgorithm extends HashingAlgorithm {
     @Override
     public void test(){
 
-        System.out.println("QUADRATIC REHASHING");
+        System.out.println(propertiesResourceBundle.getString("quadratic.rehashing.method.name"));
 
         super.test();
     }

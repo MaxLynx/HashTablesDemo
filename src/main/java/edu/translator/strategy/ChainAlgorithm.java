@@ -1,5 +1,7 @@
-package edu.translator;
+package edu.translator.strategy;
 
+
+import edu.translator.entities.Symbol;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +23,7 @@ public class ChainAlgorithm extends HashingAlgorithm {
     protected boolean tryToWrite(String word, int attempt){
         HASH_MISS_COUNT = 0;
         int hashCode = toHash(word) % TABLE_SIZE;
-        if(hashTable[hashCode].equals("$")){
+        if(hashTable[hashCode].equals(TABLE_FILLER)){
             hashTable[hashCode] = "" + POINT_FREE;
             symbols.add(new Symbol(word, 0));
             POINT_FREE++;
@@ -40,11 +42,15 @@ public class ChainAlgorithm extends HashingAlgorithm {
         }
     }
 
+    private void tryToWrite(String word){
+        tryToWrite(word, 0);
+    }
+
     @Override
     protected boolean tryToWriteMock(String word, int attempt){
         HASH_MISS_COUNT = 0;
         int hashCode = toHash(word) % TABLE_SIZE;
-        if(hashTable[hashCode].equals("$")){
+        if(hashTable[hashCode].equals(TABLE_FILLER)){
             return true;
         }
         else{
@@ -62,10 +68,8 @@ public class ChainAlgorithm extends HashingAlgorithm {
     protected void fillInPercentage(int percentage){
         while(measureTableFilling() > 100 - percentage) {
 
-            int attempt = 0;
             String word = generateWord();
-            tryToWrite(word, attempt);
-            attempt += HASH_MISS_COUNT;
+            tryToWrite(word);
 
         }
     }
@@ -93,7 +97,7 @@ public class ChainAlgorithm extends HashingAlgorithm {
     @Override
     public void test(){
 
-        System.out.println("CHAIN METHOD");
+        System.out.println(propertiesResourceBundle.getString("chain.method.name"));
 
         super.test();
     }

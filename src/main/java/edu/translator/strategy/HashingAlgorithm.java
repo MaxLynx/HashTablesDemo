@@ -1,22 +1,27 @@
-package edu.translator;
+package edu.translator.strategy;
 
 
 import java.util.Arrays;
 import java.util.Random;
+import java.util.ResourceBundle;
 
 public abstract class HashingAlgorithm {
 
     protected int TABLE_SIZE = 256;
     protected int MAX_WORD_LENGTH = 30;
+    protected String TABLE_FILLER = "$";
 
     protected String[] hashTable;
 
     protected Random randomizer;
+    protected ResourceBundle propertiesResourceBundle;
 
-    public HashingAlgorithm(){
+
+    protected HashingAlgorithm(){
         hashTable = new String [TABLE_SIZE];
-        Arrays.fill(hashTable, "$");
+        Arrays.fill(hashTable, TABLE_FILLER);
         randomizer = new Random();
+        propertiesResourceBundle = ResourceBundle.getBundle("properties");
     }
 
     protected String generateWord(){
@@ -45,7 +50,7 @@ public abstract class HashingAlgorithm {
         int emptyCount = 0;
         for (String cell:
                 hashTable) {
-            if(cell.equals("$")){
+            if(cell.equals(TABLE_FILLER)){
                 emptyCount++;
             }
         }
@@ -62,18 +67,18 @@ public abstract class HashingAlgorithm {
 
     public void test(){
 
-        System.out.println("Size of the hash table: " + TABLE_SIZE);
-        System.out.println("Maximal length of a generated word: " + MAX_WORD_LENGTH);
+        System.out.println(propertiesResourceBundle.getString("hash.table.size.message") + TABLE_SIZE);
+        System.out.println(propertiesResourceBundle.getString("word.max.length.message") + MAX_WORD_LENGTH);
 
-        System.out.println("For the table fill of 10%");
+        System.out.println(propertiesResourceBundle.getString("10.percent.fill.message"));
         fillInPercentage(10);
         System.out.println(fillInMock());
 
-        System.out.println("For the table fill of 50%");
+        System.out.println(propertiesResourceBundle.getString("50.percent.fill.message"));
         fillInPercentage(50);
         System.out.println(fillInMock());
 
-        System.out.println("For the table fill of 90%");
+        System.out.println(propertiesResourceBundle.getString("90.percent.fill.message"));
         fillInPercentage(90);
         System.out.println(fillInMock());
 

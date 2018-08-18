@@ -1,4 +1,4 @@
-package edu.translator;
+package edu.translator.strategy;
 
 
 public class LinearRehashingAlgorithm extends HashingAlgorithm {
@@ -10,7 +10,7 @@ public class LinearRehashingAlgorithm extends HashingAlgorithm {
     @Override
     protected boolean tryToWrite(String word, int attempt){
         int hashCode = (toHash(word) + attempt) % TABLE_SIZE;
-        if(hashTable[hashCode].equals("$")){
+        if(hashTable[hashCode].equals(TABLE_FILLER)){
             hashTable[hashCode] = word;
             return true;
         }
@@ -22,10 +22,7 @@ public class LinearRehashingAlgorithm extends HashingAlgorithm {
     @Override
     protected boolean tryToWriteMock(String word, int attempt){
         int hashCode = (toHash(word) + attempt) % TABLE_SIZE;
-        if(hashTable[hashCode].equals("$")){
-            return true;
-        }
-        return false;
+        return hashTable[hashCode].equals(TABLE_FILLER);
     }
 
 
@@ -66,7 +63,7 @@ public class LinearRehashingAlgorithm extends HashingAlgorithm {
     @Override
     public void test(){
 
-        System.out.println("LINEAR REHASHING");
+        System.out.println(propertiesResourceBundle.getString("linear.rehashing.method.name"));
 
         super.test();
     }
