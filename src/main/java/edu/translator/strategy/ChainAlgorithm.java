@@ -20,6 +20,43 @@ public class ChainAlgorithm extends HashingAlgorithm {
     }
 
     @Override
+    public void test(){
+
+        System.out.println(propertiesResourceBundle.getString("chain.method.name"));
+
+        super.test();
+    }
+
+    @Override
+    protected void fillInPercentage(int percentage){
+        while(measureTableFilling() > 100 - percentage) {
+
+            String word = generateWord();
+            tryToWrite(word);
+
+        }
+    }
+
+    @Override
+    protected double fillInMock(){
+        int wordCount = 0;
+        int tryCount = 0;
+
+        while(wordCount < 100) {
+
+            wordCount++;
+            int attempt = 0;
+            String word = generateWord();
+            tryToWriteMock(word, attempt);
+            attempt += HASH_MISS_COUNT;
+            tryCount += attempt + 1;
+
+        }
+
+        return tryCount*1.0/wordCount;
+    }
+
+    @Override
     protected boolean tryToWrite(String word, int attempt){
         HASH_MISS_COUNT = 0;
         int hashCode = toHash(word) % TABLE_SIZE;
@@ -63,42 +100,4 @@ public class ChainAlgorithm extends HashingAlgorithm {
         }
     }
 
-
-    @Override
-    protected void fillInPercentage(int percentage){
-        while(measureTableFilling() > 100 - percentage) {
-
-            String word = generateWord();
-            tryToWrite(word);
-
-        }
-    }
-
-    @Override
-    protected double fillInMock(){
-        int wordCount = 0;
-        int tryCount = 0;
-
-        while(wordCount < 100) {
-
-            wordCount++;
-            int attempt = 0;
-            String word = generateWord();
-            tryToWriteMock(word, attempt);
-            attempt += HASH_MISS_COUNT;
-            tryCount += attempt + 1;
-
-        }
-
-        return tryCount*1.0/wordCount;
-    }
-
-
-    @Override
-    public void test(){
-
-        System.out.println(propertiesResourceBundle.getString("chain.method.name"));
-
-        super.test();
-    }
 }

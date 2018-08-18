@@ -8,23 +8,12 @@ public class LinearRehashingAlgorithm extends HashingAlgorithm {
     }
 
     @Override
-    protected boolean tryToWrite(String word, int attempt){
-        int hashCode = (toHash(word) + attempt) % TABLE_SIZE;
-        if(hashTable[hashCode].equals(TABLE_FILLER)){
-            hashTable[hashCode] = word;
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
+    public void test(){
 
-    @Override
-    protected boolean tryToWriteMock(String word, int attempt){
-        int hashCode = (toHash(word) + attempt) % TABLE_SIZE;
-        return hashTable[hashCode].equals(TABLE_FILLER);
-    }
+        System.out.println(propertiesResourceBundle.getString("linear.rehashing.method.name"));
 
+        super.test();
+    }
 
     @Override
     protected void fillInPercentage(int percentage){
@@ -59,12 +48,22 @@ public class LinearRehashingAlgorithm extends HashingAlgorithm {
         return tryCount*1.0/wordCount;
     }
 
+    @Override
+    protected boolean tryToWrite(String word, int attempt){
+        int hashCode = (toHash(word) + attempt) % TABLE_SIZE;
+        if(hashTable[hashCode].equals(TABLE_FILLER)){
+            hashTable[hashCode] = word;
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 
     @Override
-    public void test(){
-
-        System.out.println(propertiesResourceBundle.getString("linear.rehashing.method.name"));
-
-        super.test();
+    protected boolean tryToWriteMock(String word, int attempt){
+        int hashCode = (toHash(word) + attempt) % TABLE_SIZE;
+        return hashTable[hashCode].equals(TABLE_FILLER);
     }
+
 }

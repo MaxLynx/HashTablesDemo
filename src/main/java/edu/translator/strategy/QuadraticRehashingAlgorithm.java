@@ -12,29 +12,11 @@ public class QuadraticRehashingAlgorithm extends HashingAlgorithm {
     }
 
     @Override
-    protected boolean tryToWrite(String word, int attempt){
-        int hashCode;
-        if(attempt != 0)
-            hashCode = (toHash(word) + A_COEFFICIENT*attempt*attempt +
-                    B_COEFFICIENT*attempt + C_COEFFICIENT) % TABLE_SIZE;
-        else
-            hashCode = toHash(word) % TABLE_SIZE;
-        if(hashTable[Math.abs(hashCode)].equals(TABLE_FILLER)){
-            hashTable[Math.abs(hashCode)] = word;
-            return true;
-        }
-        return false;
-    }
+    public void test(){
 
-    @Override
-    protected boolean tryToWriteMock(String word, int attempt){
-        int hashCode;
-        if(attempt != 0)
-            hashCode = (toHash(word) + A_COEFFICIENT*attempt*attempt +
-                    B_COEFFICIENT*attempt + C_COEFFICIENT) % TABLE_SIZE;
-        else
-            hashCode = toHash(word) % TABLE_SIZE;
-        return hashTable[Math.abs(hashCode)].equals(TABLE_FILLER);
+        System.out.println(propertiesResourceBundle.getString("quadratic.rehashing.method.name"));
+
+        super.test();
     }
 
     @Override
@@ -71,10 +53,29 @@ public class QuadraticRehashingAlgorithm extends HashingAlgorithm {
     }
 
     @Override
-    public void test(){
-
-        System.out.println(propertiesResourceBundle.getString("quadratic.rehashing.method.name"));
-
-        super.test();
+    protected boolean tryToWrite(String word, int attempt){
+        int hashCode;
+        if(attempt != 0)
+            hashCode = (toHash(word) + A_COEFFICIENT*attempt*attempt +
+                    B_COEFFICIENT*attempt + C_COEFFICIENT) % TABLE_SIZE;
+        else
+            hashCode = toHash(word) % TABLE_SIZE;
+        if(hashTable[Math.abs(hashCode)].equals(TABLE_FILLER)){
+            hashTable[Math.abs(hashCode)] = word;
+            return true;
+        }
+        return false;
     }
+
+    @Override
+    protected boolean tryToWriteMock(String word, int attempt){
+        int hashCode;
+        if(attempt != 0)
+            hashCode = (toHash(word) + A_COEFFICIENT*attempt*attempt +
+                    B_COEFFICIENT*attempt + C_COEFFICIENT) % TABLE_SIZE;
+        else
+            hashCode = toHash(word) % TABLE_SIZE;
+        return hashTable[Math.abs(hashCode)].equals(TABLE_FILLER);
+    }
+
 }

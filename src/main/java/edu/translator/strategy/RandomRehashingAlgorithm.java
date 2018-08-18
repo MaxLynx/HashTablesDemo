@@ -10,33 +10,11 @@ public class RandomRehashingAlgorithm extends HashingAlgorithm {
     }
 
     @Override
-    protected boolean tryToWrite(String word, int attempt){
-        int hashCode;
-        if(attempt == 0)
-            hashCode = toHash(word) % TABLE_SIZE;
-        else {
-            R_COEFFICIENT = R_COEFFICIENT * 5 % (4 * TABLE_SIZE);
-            hashCode = (toHash(word) + R_COEFFICIENT / 4) % TABLE_SIZE;
-        }
-        if(hashTable[hashCode].equals(TABLE_FILLER)){
-            hashTable[hashCode] = word;
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
+    public void test(){
 
-    @Override
-    protected boolean tryToWriteMock(String word, int attempt){
-        int hashCode;
-        if(attempt == 0)
-            hashCode = toHash(word) % TABLE_SIZE;
-        else {
-            R_COEFFICIENT = R_COEFFICIENT * 5 % (4 * TABLE_SIZE);
-            hashCode = (toHash(word) + R_COEFFICIENT / 4) % TABLE_SIZE;
-        }
-        return hashTable[hashCode].equals(TABLE_FILLER);
+        System.out.println(propertiesResourceBundle.getString("random.rehashing.method.name"));
+
+        super.test();
     }
 
     @Override
@@ -74,12 +52,34 @@ public class RandomRehashingAlgorithm extends HashingAlgorithm {
         return tryCount*1.0/wordCount;
     }
 
+    @Override
+    protected boolean tryToWrite(String word, int attempt){
+        int hashCode;
+        if(attempt == 0)
+            hashCode = toHash(word) % TABLE_SIZE;
+        else {
+            R_COEFFICIENT = R_COEFFICIENT * 5 % (4 * TABLE_SIZE);
+            hashCode = (toHash(word) + R_COEFFICIENT / 4) % TABLE_SIZE;
+        }
+        if(hashTable[hashCode].equals(TABLE_FILLER)){
+            hashTable[hashCode] = word;
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 
     @Override
-    public void test(){
-
-        System.out.println(propertiesResourceBundle.getString("random.rehashing.method.name"));
-
-        super.test();
+    protected boolean tryToWriteMock(String word, int attempt){
+        int hashCode;
+        if(attempt == 0)
+            hashCode = toHash(word) % TABLE_SIZE;
+        else {
+            R_COEFFICIENT = R_COEFFICIENT * 5 % (4 * TABLE_SIZE);
+            hashCode = (toHash(word) + R_COEFFICIENT / 4) % TABLE_SIZE;
+        }
+        return hashTable[hashCode].equals(TABLE_FILLER);
     }
+
 }

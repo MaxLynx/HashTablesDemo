@@ -16,7 +16,6 @@ public abstract class HashingAlgorithm {
     protected Random randomizer;
     protected ResourceBundle propertiesResourceBundle;
 
-
     protected HashingAlgorithm(){
         hashTable = new String [TABLE_SIZE];
         Arrays.fill(hashTable, TABLE_FILLER);
@@ -57,14 +56,6 @@ public abstract class HashingAlgorithm {
         return Math.round(emptyCount*100.0/TABLE_SIZE);
     }
 
-    protected abstract boolean tryToWrite(String word, int attempt);
-
-    protected abstract boolean tryToWriteMock(String word, int attempt);
-
-    protected abstract void fillInPercentage(int percentage);
-
-    protected abstract double fillInMock();
-
     public void test(){
 
         System.out.println(propertiesResourceBundle.getString("hash.table.size.message") + TABLE_SIZE);
@@ -84,4 +75,13 @@ public abstract class HashingAlgorithm {
 
         System.out.println();
     }
+
+    protected abstract void fillInPercentage(int percentage);
+
+    protected abstract double fillInMock();
+
+    protected abstract boolean tryToWrite(String word, int attempt);
+
+    protected abstract boolean tryToWriteMock(String word, int attempt);
+
 }
